@@ -1,3 +1,4 @@
+import asyncio
 """
 📝 Hangman
 Guess the word letter by letter!

@@ -1,3 +1,4 @@
+import asyncio
 """
 ⭕ Tic Tac Toe
 Two-player strategy game!
@@ -80,7 +81,7 @@ class TicTacToe:
                 self.buttons[i][j].config(text='')
         self.status.config(text="Player X's turn")
     
-    def run(self):
+    async def run(self):
         self.window.mainloop()
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ Controls:
 
 import pygame
 import sys
+import asyncio
 import math
 
 pygame.init()
@@ -95,7 +96,7 @@ class Game:
                 self.bricks.append(Brick(col * BRICK_WIDTH + 10, row * BRICK_HEIGHT + 60, 
                                         COLORS[row], (6 - row) * 10))
     
-    def run(self):
+    async def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -136,5 +137,9 @@ class Game:
             pygame.display.flip()
             self.clock.tick(60)
 
+async def main():
+    game = Game()
+    await game.run()
+
 if __name__ == "__main__":
-    Game().run()
+    asyncio.run(main())

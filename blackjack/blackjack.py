@@ -1,3 +1,4 @@
+import asyncio
 """
 🃏 Blackjack
 Casino card game - get 21 or close without busting!

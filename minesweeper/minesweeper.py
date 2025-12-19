@@ -1,3 +1,4 @@
+import asyncio
 """
 💣 Minesweeper
 Find all mines without detonating!
@@ -105,7 +106,7 @@ class Minesweeper:
             self.game_over = True
             messagebox.showinfo("Congratulations!", "🎉 You won!")
     
-    def run(self):
+    async def run(self):
         self.window.mainloop()
 
 if __name__ == "__main__":

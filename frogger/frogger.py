@@ -10,6 +10,7 @@ Controls:
 import pygame
 import random
 import sys
+import asyncio
 
 pygame.init()
 
@@ -175,7 +176,7 @@ class Game:
         
         pygame.display.flip()
     
-    def run(self):
+    async def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: pygame.quit(); sys.exit()
@@ -191,5 +192,9 @@ class Game:
             self.draw()
             self.clock.tick(60)
 
+async def main():
+    game = Game()
+    await game.run()
+
 if __name__ == "__main__":
-    Game().run()
+    asyncio.run(main())

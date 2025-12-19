@@ -9,6 +9,7 @@ Controls:
 
 import pygame
 import sys
+import asyncio
 
 pygame.init()
 
@@ -107,7 +108,7 @@ class Game:
             y = self.selected.row * CELL + CELL // 2
             pygame.draw.circle(self.screen, GREEN, (x, y), CELL // 2 - 5, 4)
     
-    def run(self):
+    async def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: pygame.quit(); sys.exit()
@@ -142,5 +143,9 @@ class Game:
             pygame.display.flip()
             self.clock.tick(60)
 
+async def main():
+    game = Game()
+    await game.run()
+
 if __name__ == "__main__":
-    Game().run()
+    asyncio.run(main())

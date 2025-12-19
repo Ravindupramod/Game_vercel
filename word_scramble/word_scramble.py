@@ -1,3 +1,4 @@
+import asyncio
 """
 🔤 Word Scramble
 Unscramble the letters to find the word!

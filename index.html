@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Arcade - Vercel Edition</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #3b82f6;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 1.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #334155;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(45deg, #334155, #475569);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .card-img-real {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            border-top: 1px solid #334155;
+            color: var(--text-sub);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Python Arcade</h1>
+            <p class="subtitle">30+ Classic Games • Powered by Pygbag • Deployed on Vercel</p>
+        </header>
+
+        <div class="grid" id="game-grid">
+            <!-- Games will be injected here via JS or hardcoded -->
+        </div>
+
+        <footer>
+            <p>Built with Python, Pygame, and Vercel. <a href="https://github.com/Ravindupramod/Game_vercel" style="color: var(--primary)">View Source</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // List of games based on the directory structure
+        const games = [
+            { id: "2048", name: "2048", desc: "Join the numbers to reach 2048!", icon: "🔢" },
+            { id: "asteroids", name: "Asteroids", desc: "Blast space rocks and survive.", icon: "☄️" },
+            { id: "blackjack", name: "Blackjack", desc: "Beat the dealer to 21.", icon: "🃏" },
+            { id: "breakout", name: "Breakout", desc: "Smash the bricks!", icon: "🧱" },
+            { id: "catch_the_ball", name: "Catch the Ball", desc: "Test your reflexes.", icon: "⚽" },
+            { id: "checkers", name: "Checkers", desc: "Classic strategy board game.", icon: "⚪" },
+            { id: "connect_four", name: "Connect Four", desc: "Line up four pieces to win.", icon: "🔴" },
+            { id: "dice_rolling", name: "Dice Roller", desc: "Simple dice simulation.", icon: "🎲" },
+            { id: "flappy_bird", name: "Flappy Bird", desc: "Tap to fly through pipes.", icon: "🐦" },
+            { id: "frogger", name: "Frogger", desc: "Cross the road safely!", icon: "🐸" },
+            { id: "hangman", name: "Hangman", desc: "Guess the word.", icon: "😵" },
+            { id: "maze_runner", name: "Maze Runner", desc: "Escape the labyrinth.", icon: "🏃" },
+            { id: "memory_match", name: "Memory Match", desc: "Find the matching pairs.", icon: "🎴" },
+            { id: "minesweeper", name: "Minesweeper", desc: "Clear the minefield using logic.", icon: "💣" },
+            { id: "number_guessing", name: "Number Guess", desc: "Find the secret number.", icon: "❓" },
+            { id: "platformer", name: "Platformer", desc: "Jump and run adventure.", icon: "🎮" },
+            { id: "pong", name: "Pong", desc: "The original arcade classic.", icon: "🏓" },
+            { id: "rock_paper_scissors", name: "R-P-S", desc: "The ultimate decision maker.", icon: "✊" },
+            { id: "simon_says", name: "Simon Says", desc: "Follow the pattern.", icon: "🔔" },
+            { id: "sliding_puzzle", name: "Sliding Puzzle", desc: "Order the tiles.", icon: "🧩" },
+            { id: "snake_game", name: "Snake", desc: "Eat food and don't hit the wall.", icon: "🐍" },
+            { id: "space_invaders", name: "Space Invaders", desc: "Defend Earth from aliens.", icon: "👾" },
+            { id: "sudoku", name: "Sudoku", desc: "Fill the grid with numbers.", icon: "✏️" },
+            { id: "tetris", name: "Tetris", desc: "Stack the falling blocks.", icon: "🟦" },
+            { id: "tic_tac_toe", name: "Tic Tac Toe", desc: "Xs and Os classic.", icon: "⭕" },
+            { id: "trivia_quiz", name: "Trivia Quiz", desc: "Test your general knowledge.", icon: "🧠" },
+            { id: "war_card_game", name: "War", desc: "Simple card battle.", icon: "⚔️" },
+            { id: "whack_a_mole", name: "Whack-a-Mole", desc: "Smash 'em as they pop up!", icon: "🔨" },
+            { id: "word_scramble", name: "Word Scramble", desc: "Unscramble the letters.", icon: "🔤" },
+            { id: "yahtzee", name: "Yahtzee", desc: "Roll for the high score.", icon: "🎲" }
+        ];
+
+        const grid = document.getElementById('game-grid');
+
+        games.forEach(game => {
+            const card = document.createElement('a');
+            card.className = 'card';
+            // Important: Link to the game build directory
+            // The structure is game_id/build/web/index.html because pygbag builds there
+            // But we can simplify referencing because we set root to repo
+            // Wait, usually we deploy the repo. If repo is accessed at mysite.com/
+            // Then Space Invaders is at mysite.com/space_invaders/build/web/index.html
+            card.href = `${game.id}/build/web/index.html`; 
+            card.target = "_blank"; // Open in new tab for better game experience
+
+            const imgDiv = document.createElement('div');
+            // Try to find an image, but fallback to icon
+            // We assume game images exist as game_id/game_id.png from the README
+            const imgPath = `${game.id}/${game.id}.png`;
+            
+            // Note: In a real static site generator we'd verify image existence. 
+            // Here we'll use a visual trick: set background image, if it fails, the icon shows through? 
+            // Actually let's just use the icon for simplicity and clean aesthetics unless image loads
+            imgDiv.className = 'card-img-placeholder';
+            imgDiv.textContent = game.icon;
+            
+            // Attempt to load real image (progressive enhancement)
+            const img = new Image();
+            img.src = imgPath;
+            img.onload = () => {
+                imgDiv.innerHTML = '';
+                img.className = 'card-img-real';
+                imgDiv.appendChild(img);
+                imgDiv.className = ''; // remove placeholder class
+            };
+
+            const content = document.createElement('div');
+            content.className = 'card-content';
+
+            const title = document.createElement('div');
+            title.className = 'card-title';
+            title.textContent = game.name;
+
+            const desc = document.createElement('div');
+            desc.className = 'card-desc';
+            desc.textContent = game.desc;
+
+            const badge = document.createElement('div');
+            badge.className = 'badge';
+            badge.textContent = 'Play Now';
+
+            content.appendChild(title);
+            content.appendChild(desc);
+            content.appendChild(badge);
+
+            card.appendChild(imgDiv);
+            card.appendChild(content);
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import asyncio
 """
 📊 Sudoku
 Fill the grid with numbers 1-9!
@@ -125,7 +126,7 @@ class Sudoku:
         if self.puzzle == self.solution:
             tk.messagebox.showinfo("Congratulations!", "You solved the puzzle! 🎉")
     
-    def run(self):
+    async def run(self):
         self.window.mainloop()
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+import asyncio
 """
 🔢 Number Guessing Game
 Guess the secret number!

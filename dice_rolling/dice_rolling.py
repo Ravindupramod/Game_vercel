@@ -1,3 +1,4 @@
+import asyncio
 """
 🎲 Dice Rolling Simulator
 Roll virtual dice!

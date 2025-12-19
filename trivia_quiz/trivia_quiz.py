@@ -1,3 +1,4 @@
+import asyncio
 """
 🧠 Trivia Quiz
 Test your knowledge!

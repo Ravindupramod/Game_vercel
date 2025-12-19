@@ -1,3 +1,4 @@
+import asyncio
 """
 🎯 Yahtzee
 Dice combination game!
